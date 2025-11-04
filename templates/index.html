@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyBuddy | Your AI Study Partner</title>
+  <link rel="stylesheet" href="/static/css/land_style.css">
+</head>
+<body>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <div class="mascot bounce">
+        <div id="img">🎓</div>
+      </div>
+      <h1 class="title">
+        Meet Your New
+        <span class="highlight">Study Buddy! 🎓</span>
+      </h1>
+      <p class="subtitle">
+        Stay productive, earn rewards, and crush your goals with AI-powered motivation!
+      </p>
+      <div class="buttons">
+        <a href="{% url 'signup' %}" class="btn primary">Get Started Free ✨</a>
+        <a href="#" class="btn outline">Learn More</a>
+      </div>
+    </div>
+    <div class="floating-icon trophy">🏆</div>
+    <div class="floating-icon target">🎯</div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <h2 class="section-title">Why Students Love StudyBuddy</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon-box primary">📖</div>
+        <h3>Smart Task Manager</h3>
+        <p>Organize homework, reading, and revision with priorities and deadlines. Never miss an assignment again!</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon-box accent">🏅</div>
+        <h3>Earn Rewards</h3>
+        <p>Complete tasks to earn points, level up, and unlock badges. Turn studying into a fun game!</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon-box secondary">💡</div>
+        <h3>AI Motivation</h3>
+        <p>Get personalized motivational quotes and study tips powered by AI. Stay inspired every day!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <h2>Ready to Level Up Your Study Game?</h2>
+    <p>Join thousands of students who are already crushing their goals with StudyBuddy!</p>
+    <a href="{% url 'signup' %}" class="btn primary">Start Your Journey ✨</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© BY PRINCE DEREK • 2025 StudyBuddy • Made with 💜 for students everywhere.</p>
+  </footer>
+</body>
+</html>

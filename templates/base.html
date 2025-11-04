@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}StudyBuddy{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="logo">📚 StudyBuddy</span>
+            </div>
+            <div class="nav-links">
+                <a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a>
+                <a href="{% url 'tasks' %}" class="nav-link">Tasks</a>
+                <a href="{% url 'analytics' %}" class="nav-link">Analytics</a>
+                <a href="{% url 'profile' %}" class="nav-link">Profile</a>
+                <a href="{% url 'logout' %}" onclick="return confirm('Are you sure you want to log out?');" class="nav-link">Logout</a>
+            </div>
+            <div class="nav-user">
+                <span class="level-badge">Level {{ user.profile.level }}</span>
+                <span class="points-badge">{{ user.profile.total_points }} pts</span>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+
+    {% comment %} <div id="mascot" class="mascot">
+        <div class="mascot-face">🎓</div>
+        <div id="mascot-message" class="mascot-message"></div>
+    </div> {% endcomment %}
+<div id="mascot" class="mascot">
+    <div class="chat-badge" id="chatBadge">💬</div>
+    <div id="mascot-message" class="mascot-message"></div>
+    <div class="mascot-face" onclick="toggleChat()">🎓</div>
+</div>
+
+<div id="chatWindow" class="chat-window">
+    <div class="chat-header">
+        <div class="chat-title">
+            <span class="chat-icon">🎓</span>
+            <span>StudyBuddy Assistant</span>
+        </div>
+        <div class="chat-actions">
+            <button onclick="clearChat()" class="chat-btn" title="Clear chat">🗑️</button>
+            <button onclick="toggleChat()" class="chat-btn" title="Close">✕</button>
+        </div>
+    </div>
+    
+    <div id="chatMessages" class="chat-messages">
+        <div class="bot-message">
+            <div class="message-avatar">🎓</div>
+            <div class="message-bubble">
+                Hey there! 👋 I'm your StudyBuddy! Ask me anything about studying, homework help, 
+                time management, or just chat if you need motivation! How can I help you today?
+            </div>
+        </div>
+    </div>
+    
+    <div class="chat-quick-actions">
+        <button onclick="quickQuestion('How do I stay focused while studying?')" class="quick-btn">
+            🎯 Focus tips
+        </button>
+        <button onclick="quickQuestion('Help me plan my study schedule')" class="quick-btn">
+            📅 Schedule help
+        </button>
+        <button onclick="quickQuestion('I feel overwhelmed with homework')" class="quick-btn">
+            😰 Feeling overwhelmed
+        </button>
+    </div>
+    
+    <form id="chatForm" class="chat-input-form">
+        <input 
+            type="text" 
+            id="chatInput" 
+            placeholder="Ask me anything..." 
+            autocomplete="off"
+        >
+        <button type="submit" class="send-btn">
+            <span id="sendIcon">📤</span>
+        </button>
+    </form>
+</div>
+
+
+    <main class="container">
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="/static/js/script.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

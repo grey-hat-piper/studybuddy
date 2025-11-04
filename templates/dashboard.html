@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% block title %} Dashboard - StudyBuddy {% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <div class="welcome-section">
+        <h1>Hey {{ user.username }}! 🌟</h1>
+        <p class="streak-text">
+            🔥 {{ profile.streak_count }} day streak • 
+            ⭐ Level {{ profile.level }} • 
+            ✅ {{ completed_today }} tasks today
+        </p>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="card motivation-card">
+            <h2>💪 Daily Motivation</h2>
+            {% if quote %}
+            <blockquote class="quote">
+                "{{ quote.content }}"
+                <footer>— {{ quote.author }}</footer>
+            </blockquote>
+            {% endif %}
+            <button onclick="getNewMotivation()" class="btn btn-secondary">Get Inspired!</button>
+        </div>
+
+        <div class="card tasks-card">
+            <h2>📋 Upcoming Tasks</h2>
+            {% if tasks %}
+            <ul class="task-list">
+                {% for task in tasks %}
+                <li class="task-item priority-{{ task.priority }}">
+                    <div class="task-info">
+                        <strong>{{ task.title }}</strong>
+                        <span class="task-meta">{{ task.category|title }} • Due: {{ task.due_date|date:"M d" }}</span>
+                    </div>
+                    <button onclick="completeTask({{ task.id }})" class="btn-icon">✓</button>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="empty-state">No pending tasks. You're all caught up! 🎉</p>
+            {% endif %}
+            <a href="{% url 'tasks' %}" class="btn btn-outline">View All Tasks</a>
+        </div>
+
+        <div class="card tips-card">
+            <h2>💡 Study Tip</h2>
+            {% if tip %}
+            <p class="tip-content">{{ tip.content }}</p>
+            <span class="tip-tag">{{ tip.context_tag }}</span>
+            {% endif %}
+        </div>
+
+        <div class="card rewards-card">
+            <h2>🏆 Recent Rewards</h2>
+            {% if recent_rewards %}
+            <ul class="rewards-list">
+                {% for reward in recent_rewards %}
+                <li class="reward-item">
+                    <span class="reward-points">+{{ reward.points_earned }} pts</span>
+                    {% if reward.badge_name %}
+                    <span class="badge">🎖️ {{ reward.badge_name }}</span>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="empty-state">Complete tasks to earn rewards! 🎁</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="quick-add">
+        <button onclick="showTaskModal()" class="btn btn-primary btn-large">+ Add New Task</button>
+    </div>
+</div>
+
+<div id="taskModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeTaskModal()">&times;</span>
+        <h2>Create New Task ✨</h2>
+        <form id="taskForm">
+            <div class="form-group">
+                <label>Task Title</label>
+                <input type="text" id="taskTitle" placeholder="eg. Complete Math Homework" required>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="taskDescription" placeholder="Add any additional details..." rows="3"></textarea>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="taskCategory">
+                        <option value="homework">Homework</option>
+                        <option value="reading">Reading</option>
+                        <option value="revision">Revision</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Priority</label>
+                    <select id="taskPriority">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Due Date</label>
+                <input type="datetime-local" id="taskDueDate" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Task</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    showMascotMessage("Welcome back! Let's make today amazing! 🌟");
+</script>
+{% endblock %}

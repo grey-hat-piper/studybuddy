@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block title %}Analytics - StudyBuddy{% endblock %}
+
+{% block content %}
+<div class="analytics-page">
+    <div class="page-header">
+        <h1>Your Progress 📈</h1>
+        <div class="time-filters">
+            <a href="?days=7" class="filter-btn active">7 Days</a>
+            <a href="?days=30" class="filter-btn">30 Days</a>
+            <a href="?days=90" class="filter-btn">90 Days</a>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-value">{{ total_completed }}</div>
+            <div class="stat-label">Tasks Completed</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ total_points }}</div>
+            <div class="stat-label">Total Points</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ user.profile.level }}</div>
+            <div class="stat-label">Current Level</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ user.profile.streak_count }}</div>
+            <div class="stat-label">Day Streak</div>
+        </div>
+    </div>
+
+    <div class="charts-container">
+        <div class="chart-card">
+            <h2>Tasks Completed Over Time</h2>
+            <canvas id="tasksChart"></canvas>
+        </div>
+
+        <div class="chart-card">
+            <h2>Tasks by Category</h2>
+            <canvas id="categoryChart"></canvas>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+<script>
+    const tasksData = {{ tasks_by_day|safe }};
+    const categoryData = {{ category_stats|safe }};
+
+    // Tasks over time chart
+    const ctx1 = document.getElementById('tasksChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: tasksData.map(d => d.date),
+            datasets: [{
+                label: 'Tasks Completed',
+                data: tasksData.map(d => d.count),
+                borderColor: '#6366f1',
+                backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // Category chart
+    const ctx2 = document.getElementById('categoryChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+            labels: categoryData.map(d => d.category),
+            datasets: [{
+                data: categoryData.map(d => d.count),
+                backgroundColor: [
+                    '#6366f1',
+                    '#8b5cf6',
+                    '#ec4899',
+                    '#f59e0b'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+</script>
+{% endblock %}

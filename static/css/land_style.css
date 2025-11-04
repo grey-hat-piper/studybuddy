@@ -1,0 +1,233 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: #f9f9fc;
+  color: #222;
+  line-height: 1.6;
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  height: 100vh;
+  background: linear-gradient(135deg, rgba(156, 89, 255, 0.9), rgba(59, 130, 246, 0.85)),
+              url('hero-bg.jpg') center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  color: white;
+  max-width: 800px;
+  padding: 20px;
+}
+
+.mascot #img {
+  display: block;
+  background-clip: text;
+  animation: bounce 2s infinite;
+  font-size: 7rem;
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 1rem 0;
+}
+
+.highlight {
+  display: block;
+  background: linear-gradient(90deg, #a855f7, #3b82f6);
+  background-clip: text;
+  color: transparent;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btn {
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.9rem 2rem;
+  border-radius: 16px;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.btn.primary {
+  background: white;
+  color: #4f46e5;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+}
+
+.btn.primary:hover {
+  transform: translateY(-3px);
+  background: #f1f1f1;
+}
+
+.btn.outline {
+  border: 2px solid white;
+  color: white;
+  background: transparent;
+}
+
+.btn.outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Floating Icons */
+.floating-icon {
+  position: absolute;
+  font-size: 3rem;
+  opacity: 0.6;
+  animation: pulse 3s infinite;
+}
+
+.trophy {
+  top: 60px;
+  left: 60px;
+}
+
+.target {
+  bottom: 80px;
+  right: 60px;
+  animation-delay: 1s;
+}
+
+/* Features Section */
+.features {
+  padding: 100px 20px;
+  background: #fff;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #a855f7, #3b82f6);
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 3rem;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: #fafafa;
+  padding: 2rem;
+  border-radius: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(156, 89, 255, 0.4);
+}
+
+.icon-box {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  margin: 0 auto 1.5rem;
+  color: white;
+}
+
+.icon-box.primary {
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+}
+
+.icon-box.accent {
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+}
+
+.icon-box.secondary {
+  background: linear-gradient(135deg, #22c55e, #10b981);
+}
+
+.feature-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #111;
+}
+
+.feature-card p {
+  color: #555;
+  font-size: 1rem;
+}
+
+/* CTA Section */
+.cta {
+  padding: 100px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #9c5fff, #3b82f6);
+  color: white;
+}
+
+.cta h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.cta p {
+  font-size: 1.25rem;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+}
+
+/* Footer */
+footer {
+  background: #fafafa;
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  border-top: 1px solid #eee;
+}
+
+/* Animations */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}

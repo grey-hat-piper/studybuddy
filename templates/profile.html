@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Profile - StudyBuddy{% endblock %}
+
+{% block content %}
+<div class="profile-page">
+    <div class="profile-header">
+        <div class="profile-avatar">
+            <div class="avatar-circle">{{ user.username|slice:":1"|upper }}</div>
+        </div>
+        <div class="profile-info">
+            <h1>{{ user.username }}</h1>
+            <p class="profile-stats">
+                🎓 Level {{ profile.level }} • 
+                ⭐ {{ profile.total_points }} Points • 
+                🔥 {{ profile.streak_count }} Day Streak
+            </p>
+        </div>
+    </div>
+
+    <div class="profile-grid">
+        <div class="card badges-card">
+            <h2>🏆 Badges Earned</h2>
+            {% if badges %}
+            <div class="badges-grid">
+                {% for badge in badges %}
+                <div class="badge-item">
+                    <div class="badge-icon">🎖️</div>
+                    <span>{{ badge }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="empty-state">Complete tasks to earn badges!</p>
+            {% endif %}
+        </div>
+
+        <div class="card recent-activity">
+            <h2>📊 Recent Activity</h2>
+            {% if recent_tasks %}
+            <ul class="activity-list">
+                {% for task in recent_tasks %}
+                <li class="activity-item">
+                    <span class="activity-icon">✅</span>
+                    <div class="activity-details">
+                        <strong>{{ task.title }}</strong>
+                        <small>{{ task.completed_at|date:"M d, Y" }}</small>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="empty-state">No completed tasks yet!</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

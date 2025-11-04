@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block title %}Tasks - StudyBuddy{% endblock %}
+
+{% block content %}
+<div class="tasks-page">
+    <div class="page-header">
+        <h1>My Tasks 📝</h1>
+        <button onclick="showTaskModal()" class="btn btn-primary">+ Add Task</button>
+    </div>
+
+    <div class="filters">
+        <a href="?filter=all" class="filter-btn {% if filter == 'all' %}active{% endif %}">All</a>
+        <a href="?filter=pending" class="filter-btn {% if filter == 'pending' %}active{% endif %}">Pending</a>
+        <a href="?filter=completed" class="filter-btn {% if filter == 'completed' %}active{% endif %}">Completed</a>
+        <a href="?filter=homework" class="filter-btn {% if filter == 'homework' %}active{% endif %}">Homework</a>
+        <a href="?filter=reading" class="filter-btn {% if filter == 'reading' %}active{% endif %}">Reading</a>
+        <a href="?filter=revision" class="filter-btn {% if filter == 'revision' %}active{% endif %}">Revision</a>
+    </div>
+
+    <div class="tasks-container">
+        {% if tasks %}
+        {% for task in tasks %}
+        <div class="task-card priority-{{ task.priority }} {% if task.is_completed %}completed{% endif %}">
+            <div class="task-header">
+                <h3>{{ task.title }}</h3>
+                <span class="priority-badge">{{ task.priority|upper }}</span>
+            </div>
+            {% if task.description %}
+            <p class="task-description">{{ task.description }}</p>
+            {% endif %}
+            <div class="task-meta-info">
+                <span class="category-tag">{{ task.category|title }}</span>
+                <span class="due-date">Due: {{ task.due_date|date:"M d, Y h:i A" }}</span>
+            </div>
+            <div class="task-actions">
+                {% if not task.is_completed %}
+                <button onclick="completeTask({{ task.id }})" class="btn btn-success">✓ Complete</button>
+                {% else %}
+                <div class="completed-actions">
+                <span class="completed-badge">✅ Completed {{ task.completed_at|date:"M d" }}</span>
+                <button onclick="uncompleteTask({{ task.id }})" class="btn btn-undo" title="Undo completion">↶ Undo</button>
+                </div>
+                {% endif %}
+                <button onclick="deleteTask({{ task.id }})" class="btn btn-danger">🗑️ Delete</button>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="empty-state-large">
+            <div class="empty-icon">📭</div>
+            <h2>No tasks found</h2>
+            <p>Create your first task to get started!</p>
+            <button onclick="showTaskModal()" class="btn btn-primary">+ Add Task</button>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div id="taskModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeTaskModal()">&times;</span>
+        <h2>Create New Task ✨</h2>
+        <form id="taskForm">
+            <div class="form-group">
+                <label>Task Title</label>
+                <input type="text" id="taskTitle" placeholder="eg. Complete Math Homework" required>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="taskDescription" placeholder="Add any additional details..." rows="3"></textarea>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="taskCategory">
+                        <option value="homework">Homework</option>
+                        <option value="reading">Reading</option>
+                        <option value="revision">Revision</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Priority</label>
+                    <select id="taskPriority">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Due Date</label>
+                <input type="datetime-local" id="taskDueDate" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Task</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
